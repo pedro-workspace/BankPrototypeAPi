@@ -11,7 +11,7 @@ import java.time.LocalDate
 
 data class CreditDto(
     @field:NotNull(message = "Invalid credit value") val creditValue:BigDecimal,
-    @field:Future val dayOfInstallment: LocalDate,
+    @field:Future val dayOneOfInstallment: LocalDate,
     @field:Min(value = 1) @field:Max(value = 48) val numberOfInstallment: Int,
     @field:NotNull(message = "Id não identificado") val customerId:Long
 ){
