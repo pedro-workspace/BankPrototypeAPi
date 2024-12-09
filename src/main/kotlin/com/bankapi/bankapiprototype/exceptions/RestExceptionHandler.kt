@@ -41,10 +41,24 @@ class RestExceptionHandler {
     }
     @ExceptionHandler(BussinessException::class)
     fun handlerValidException(exception:BussinessException):ResponseEntity<ExceptionDetail>{
-        TODO()
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+            ExceptionDetail(
+                title = "BussinessException Ocurred, consult documentation",
+                status = HttpStatus.BAD_REQUEST.value(),
+                exceptionName = exception.javaClass.toString(),
+                details = mutableMapOf(exception.cause.toString() to exception.message)
+            )
+        )
     }
     @ExceptionHandler(IllegalArgumentException::class)
     fun handlerValidException(exception:IllegalArgumentException):ResponseEntity<ExceptionDetail>{
-        TODO()
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+            ExceptionDetail(
+                title = "Illegal argument found, consult documentation",
+                status = HttpStatus.BAD_REQUEST.value(),
+                exceptionName = exception.javaClass.toString(),
+                details = mutableMapOf(exception.cause.toString() to exception.message)
+            )
+        )
     }
 }
