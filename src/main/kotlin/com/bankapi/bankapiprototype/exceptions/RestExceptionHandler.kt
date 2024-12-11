@@ -33,7 +33,7 @@ class RestExceptionHandler {
     @ExceptionHandler(DataAccessException::class)
     fun handlerValidException(exception: DataAccessException):ResponseEntity<ExceptionDetail>{
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ExceptionDetail(
-            title = "Conflit found, consult documentation",
+            title = "Conflict found, consult documentation",
             status = HttpStatus.CONFLICT.value(),
             exceptionName = exception.javaClass.toString(),
             details = mutableMapOf(exception.cause.toString() to exception.message)
@@ -43,7 +43,7 @@ class RestExceptionHandler {
     fun handlerValidException(exception:BussinessException):ResponseEntity<ExceptionDetail>{
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
             ExceptionDetail(
-                title = "BussinessException Ocurred, consult documentation",
+                title = "BusinessException Occurred, consult documentation",
                 status = HttpStatus.BAD_REQUEST.value(),
                 exceptionName = exception.javaClass.toString(),
                 details = mutableMapOf(exception.cause.toString() to exception.message)
