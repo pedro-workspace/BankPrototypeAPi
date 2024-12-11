@@ -13,7 +13,7 @@ data class CreditView(
     val emailCustomer:String?,
     val customerIncome:BigDecimal?
 ){
-    constructor(credit:Credit):this(
+    constructor(credit: Credit?):this(
         creditCode = credit.creditId,
         creditValue = credit.creditValue,
         status = credit.status,

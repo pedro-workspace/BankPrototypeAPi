@@ -4,11 +4,15 @@ import com.bankapi.bankapiprototype.entity.Credit
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
-import java.util.UUID
+import java.math.BigDecimal
 
 @Repository
 interface CreditRepository: JpaRepository<Credit, Long> {
-    fun findByCreditCode(creditCode:UUID):Credit?
+    fun findByCreditCode(creditCode: Long):Credit?
     @Query(value = "SELECT * FROM CREDIT WHERE CUSTOMER_ID = ?1")
     fun findAllByCustomerId(customerId:Long):List<Credit>
+    @Query("UPDATE CREDIT" +
+            "SET CREDIT_VALUE = ?2, NUMBER_OF_INSTALLMENTS = ?3" +
+            "WHERE CREDIT_ID = ?1")
+    fun update(creditId: Long, creditValue:BigDecimal, numberOfInstallments:Int):Credit
 }

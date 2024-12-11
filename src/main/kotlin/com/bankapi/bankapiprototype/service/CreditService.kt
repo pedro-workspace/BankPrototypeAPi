@@ -1,12 +1,11 @@
 package com.bankapi.bankapiprototype.service
 
+import com.bankapi.bankapiprototype.dto.requests.CreditUpdateDto
 import com.bankapi.bankapiprototype.entity.Credit
-import com.bankapi.bankapiprototype.entity.Customer
 import com.bankapi.bankapiprototype.exceptions.BussinessException
 import com.bankapi.bankapiprototype.repositorio.CreditRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDate
-import java.util.*
 
 @Service
 class CreditService(
@@ -21,14 +20,21 @@ class CreditService(
         credit.customer = customerService.findById(credit.customer?.id!!)
         return creditRepository.save(credit)
     }
-    fun findAllByCustomer(customerId: Long):List<Credit>{
+    fun findAllByCustomerId(customerId: Long):List<Credit>{
         return this.creditRepository.findAllByCustomerId(customerId)
     }
-    fun findById(creditId:Long): Optional<Credit> {
-        return this.creditRepository.findById(creditId)
+    fun findById(creditId:Long, customerId:Long): Credit? {
+        val credit:Credit? =  this.creditRepository.findByCreditCode(creditId)?:throw BussinessException("Credit not found")
+        if(credit?.customer?.id == null){
+            throw IllegalArgumentException("Customer from credit of credit_id ${credit?.creditId} not found")
+        }
+        return credit
     }
     fun delete(creditId: Long){
 
-        this.creditRepository.deleteById(creditId)
+        this.creditRepository.deleteById(creditId.toString().toLong())
+    }
+    fun update(creditId:Long, creditUpdateDto: CreditUpdateDto):Credit{
+        return this.creditRepository.update(creditId, creditUpdateDto.creditValue, creditUpdateDto.numberOfInstallment)
     }
 }

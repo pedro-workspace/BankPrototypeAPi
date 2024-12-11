@@ -13,7 +13,7 @@ class CustomerService(
     fun save(customer: Customer): Customer{
         return this.customerRepository.save(customer)
     }
-    fun findById(customerId:Long):Customer{
+    fun findById(customerId: Long):Customer{
         return this.customerRepository.findById(customerId).orElse(throw BussinessException("Id $customerId not found"))
     }
     fun findManyByName(customerName:String):List<Customer>{
