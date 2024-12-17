@@ -4,6 +4,7 @@ import com.bankapi.bankapiprototype.dto.requests.CreditDto
 import com.bankapi.bankapiprototype.dto.requests.CreditUpdateDto
 import com.bankapi.bankapiprototype.dto.responses.CreditView
 import com.bankapi.bankapiprototype.entity.Credit
+import com.bankapi.bankapiprototype.exceptions.BussinessException
 import com.bankapi.bankapiprototype.service.CreditService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -23,7 +24,7 @@ class CreditController(private val creditService:CreditService) {
         )
     }
 
-    @GetMapping()
+    @GetMapping("/{customerId}")
     fun findAllByCustomerId(@RequestParam(value = "customerId") customerId:Long):ResponseEntity<List<CreditView>>{
         val creditsView = this.creditService.findAllByCustomerId(customerId).
                 stream().map{
@@ -34,9 +35,9 @@ class CreditController(private val creditService:CreditService) {
 
     @GetMapping("/{creditId}")
     fun findByCreditId(@RequestParam(value = "creditId") creditId: Long,
-                       @PathVariable customerId:Long):ResponseEntity<CreditView>{
-        val creditView:CreditView = CreditView(this.creditService.findById(creditId, customerId))
-        return ResponseEntity.status(HttpStatus.OK).body(creditView)
+                       @PathVariable customerId:Long):ResponseEntity<CreditView>?{
+        val credit:Credit? = this.creditService.findById(creditId, customerId)
+        return ResponseEntity.status(HttpStatus.OK).body(CreditView(credit!!))?: throw BussinessException("Credit not found")
     }
 
     @PatchMapping()

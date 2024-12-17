@@ -10,8 +10,8 @@ import org.hibernate.validator.constraints.br.CPF
 import java.math.BigDecimal
 
 data class CustomerDto(
-    @field:NotEmpty(message = "First name not found") val firstName:String,
-    @field:NotEmpty(message = "Last name not found") val lastName:String,
+    @field:NotEmpty(message = "First name not found") val nome:String,
+    @field:NotEmpty(message = "Last name not found") val sobrenome:String,
     @field:NotEmpty(message = "CPF found empty")
     @field:CPF(message = "Not a valid CPF") val cpf:String,
     @field:Email(message = "Invalid e-mail")
@@ -22,11 +22,11 @@ data class CustomerDto(
     @field:NotEmpty(message = "Steet not found") val street:String
 ){
     fun toEntity():Customer = Customer(
-        nome = this.firstName,
-        sobrenome =  this.lastName,
+        nome = this.nome,
+        sobrenome =  this.sobrenome,
         cpf = this.cpf,
-        income = this.income,
         email = this.email,
+        income = this.income,
         password = this.password,
         address = Address(this.zipCode, this.street)
     )

@@ -6,9 +6,8 @@ import java.math.BigDecimal
 import java.util.UUID
 
 @Entity
-@Table(name = "Cliente")
 data class Customer(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id:Long? = null,
+    @Id @Column @GeneratedValue(strategy = GenerationType.IDENTITY) var id:Long? = null,
     @Column(nullable=false) var nome:String = "",
     @Column(nullable=false) var sobrenome:String = "",
     @Column(nullable=false, unique = true) var cpf:String = "",
@@ -18,5 +17,5 @@ data class Customer(
     @Column(nullable=false) @Embedded var address: Address,
     @Column(nullable=false) @OneToMany(fetch = FetchType.LAZY,
         cascade = arrayOf(CascadeType.REMOVE, CascadeType.PERSIST), mappedBy = "customer")
-        var credits:List<Credit> = mutableListOf()
+        var credits:MutableList<Credit> = mutableListOf()
     )

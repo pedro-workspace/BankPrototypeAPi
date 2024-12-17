@@ -24,7 +24,7 @@ class CreditService(
         return this.creditRepository.findAllByCustomerId(customerId)
     }
     fun findById(creditId:Long, customerId:Long): Credit? {
-        val credit:Credit? =  this.creditRepository.findByCreditCode(creditId)?:throw BussinessException("Credit not found")
+        val credit:Credit? =  this.creditRepository.findByCreditId(creditId)?:throw BussinessException("Credit not found")
         if(credit?.customer?.id == null){
             throw IllegalArgumentException("Customer from credit of credit_id ${credit?.creditId} not found")
         }

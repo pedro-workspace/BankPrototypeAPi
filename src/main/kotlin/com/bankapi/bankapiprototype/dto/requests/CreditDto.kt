@@ -17,7 +17,7 @@ data class CreditDto(
 ){
     fun toEntity():Credit = Credit(
         creditValue = this.creditValue,
-        dayFirstInstallment = this.dayOfInstallment,
+        dayFirstInstallment = this.dayOneOfInstallment,
         numberOfInstallments = this.numberOfInstallment,
         //customer = Customer from customerId
         //  fetch it from the database
