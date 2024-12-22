@@ -1,4 +1,4 @@
-package com.bankapi.bankapiprototype.exceptions
+package com.bankapi.bankapiprototype.exception
 
 import java.time.LocalDateTime
 

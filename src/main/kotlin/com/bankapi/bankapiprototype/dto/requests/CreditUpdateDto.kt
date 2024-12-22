@@ -1,6 +1,5 @@
 package com.bankapi.bankapiprototype.dto.requests
 
-import com.bankapi.bankapiprototype.controllers.CustomerController
 import com.bankapi.bankapiprototype.entity.Credit
 import com.bankapi.bankapiprototype.entity.Customer
 import com.bankapi.bankapiprototype.enum.Status

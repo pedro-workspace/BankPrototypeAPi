@@ -1,4 +1,4 @@
-package com.bankapi.bankapiprototype.controllers
+package com.bankapi.bankapiprototype.controller
 
 import com.bankapi.bankapiprototype.dto.requests.CustomerDto
 import com.bankapi.bankapiprototype.dto.requests.CustomerUpdateDto
@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.*
 import java.util.stream.Collectors
 
 @RestController
-@RequestMapping("/api/customers")
+@RequestMapping("/customers")
 class CustomerController(private val customerService: CustomerService) {
     @PostMapping
-    fun saveCustomer(@RequestParam(value = "customerDto") customerDto:CustomerDto){
-        this.customerService.save(customerDto.toEntity())
+    fun saveCustomer(@RequestBody customerDto:CustomerDto) : String{
+        val customer = this.customerService.save(customerDto.toEntity())
+        return "Customer ${customer.cpf} saved"
     }
 
     @GetMapping("/{customerId}")
@@ -40,13 +41,13 @@ class CustomerController(private val customerService: CustomerService) {
         return ResponseEntity.status(HttpStatus.OK).body(customerView)
     }
 
-    @PatchMapping()
+    @PatchMapping("/update/{customerId}")
     fun updateCustomer(@RequestParam(value = "customerId") customerId:Long,
                        @RequestParam(value = "customerNewData") customerNewData: CustomerUpdateDto){
         this.customerService.update(customerId, customerNewData)
     }
 
-    @DeleteMapping("/{customerId}")
+    @DeleteMapping("/detele/{customerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteCustomer(@RequestParam(value = "customerId") customerId:Long){
         this.customerService.delete(customerId)

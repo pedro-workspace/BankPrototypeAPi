@@ -2,8 +2,8 @@ package com.bankapi.bankapiprototype.service
 
 import com.bankapi.bankapiprototype.dto.requests.CreditUpdateDto
 import com.bankapi.bankapiprototype.entity.Credit
-import com.bankapi.bankapiprototype.exceptions.BussinessException
-import com.bankapi.bankapiprototype.repositorio.CreditRepository
+import com.bankapi.bankapiprototype.exception.BussinessException
+import com.bankapi.bankapiprototype.repository.CreditRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 
@@ -17,7 +17,7 @@ class CreditService(
     }
     fun save(credit:Credit):Credit{
         this.validateDayFirstDayOfInstallment(credit.dayFirstInstallment)
-        credit.customer = customerService.findById(credit.customer?.id!!)
+        credit.customer = customerService.findById(credit.customer?.customerId!!)
         return creditRepository.save(credit)
     }
     fun findAllByCustomerId(customerId: Long):List<Credit>{
@@ -25,7 +25,7 @@ class CreditService(
     }
     fun findById(creditId:Long, customerId:Long): Credit? {
         val credit:Credit? =  this.creditRepository.findByCreditId(creditId)?:throw BussinessException("Credit not found")
-        if(credit?.customer?.id == null){
+        if(credit?.customer?.customerId == null){
             throw IllegalArgumentException("Customer from credit of credit_id ${credit?.creditId} not found")
         }
         return credit

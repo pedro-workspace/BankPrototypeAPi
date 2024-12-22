@@ -2,8 +2,8 @@ package com.bankapi.bankapiprototype.service
 
 import com.bankapi.bankapiprototype.dto.requests.CustomerUpdateDto
 import com.bankapi.bankapiprototype.entity.Customer
-import com.bankapi.bankapiprototype.exceptions.BussinessException
-import com.bankapi.bankapiprototype.repositorio.CustomerRepository
+import com.bankapi.bankapiprototype.exception.BussinessException
+import com.bankapi.bankapiprototype.repository.CustomerRepository
 import org.springframework.stereotype.Service
 
 @Service

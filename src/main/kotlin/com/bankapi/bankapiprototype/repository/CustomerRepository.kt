@@ -1,6 +1,5 @@
-package com.bankapi.bankapiprototype.repositorio
+package com.bankapi.bankapiprototype.repository
 
-import com.bankapi.bankapiprototype.dto.requests.CustomerUpdateDto
 import com.bankapi.bankapiprototype.entity.Customer
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query

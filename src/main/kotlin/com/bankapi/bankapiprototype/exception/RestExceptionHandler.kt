@@ -1,4 +1,4 @@
-package com.bankapi.bankapiprototype.exceptions
+package com.bankapi.bankapiprototype.exception
 
 import org.springframework.dao.DataAccessException
 import org.springframework.http.HttpStatus
@@ -8,7 +8,6 @@ import org.springframework.validation.ObjectError
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
-import java.time.LocalDateTime
 
 @RestControllerAdvice
 class RestExceptionHandler {

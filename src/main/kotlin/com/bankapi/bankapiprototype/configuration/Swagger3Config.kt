@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration
 class Swagger3Config {
     @Bean
     fun publicApi(): GroupedOpenApi?{
-        return GroupedOpenApi.builder().group("springbankapiprototype")
-            .pathsToMatch("/api/customers/**", "/api/credits/**")
+        return GroupedOpenApi.builder().group("bankapiprototype")
+            .pathsToMatch("/customers/**", "/credits/**")
             .build()
     }
 }
