@@ -22,7 +22,7 @@ data class CustomerDto(
     @field:NotEmpty(message = "Steet not found") val street:String
 ){
     fun toEntity():Customer = Customer(
-        customerId = "${hashCode()}${hashCode()}".toLong(),
+        customerId = hashCode().toLong(),
         nome = this.nome,
         sobrenome =  this.sobrenome,
         cpf = this.cpf,

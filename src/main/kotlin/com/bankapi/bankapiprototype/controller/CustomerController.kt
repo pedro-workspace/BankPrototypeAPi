@@ -43,7 +43,7 @@ class CustomerController(private val customerService: CustomerService) {
 
     @PatchMapping("/update/{customerId}")
     fun updateCustomer(@RequestParam(value = "customerId") customerId:Long,
-                       @RequestParam(value = "customerNewData") customerNewData: CustomerUpdateDto){
+                       @RequestBody customerNewData: CustomerUpdateDto){
         this.customerService.update(customerId, customerNewData)
     }
 

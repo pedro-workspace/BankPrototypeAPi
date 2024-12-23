@@ -1,34 +1,69 @@
 package com.bankapi.bankapiprototype.service
 
+import com.bankapi.bankapiprototype.dto.requests.CustomerDto
 import com.bankapi.bankapiprototype.dto.requests.CustomerUpdateDto
 import com.bankapi.bankapiprototype.entity.Customer
 import com.bankapi.bankapiprototype.exception.BussinessException
 import com.bankapi.bankapiprototype.repository.CustomerRepository
+import org.springframework.dao.DataAccessException
 import org.springframework.stereotype.Service
 
 @Service
 class CustomerService(
     private val customerRepository: CustomerRepository
 ) {
-    fun save(customer: Customer): Customer{
-        return this.customerRepository.save(customer)
+
+    fun save(customer: Customer):Customer{
+        return this.customerRepository.save(customer) ?: throw BussinessException("Could not save customer")
     }
-    fun findById(customerId: Long):Customer{
-        return this.customerRepository.findById(customerId).orElse(throw BussinessException("Id $customerId not found"))
+
+    fun findById(customerId:Long):Customer{
+        val customer:Customer = this.customerRepository.findById(customerId).get() ?: throw BussinessException("Error, could not find customer")
+        return customer
     }
-    fun findManyByName(customerName:String):List<Customer>{
-        val customerList:List<Customer> = this.customerRepository.findManyByName(customerName)
-        return customerList
+
+    fun findByName(name:String):List<Customer> {
+        val customers:List<Customer> = this.customerRepository.findAll()
+        var customerWithNameEquals:MutableList<Customer> = mutableListOf()
+        customers.forEach{
+            c -> if(name in c.nome){
+                customerWithNameEquals.add(c)
+        }
+        }
+        return customerWithNameEquals
     }
-    fun findManyBySurname(customerSurname:String):List<Customer>{
-        return this.customerRepository.findManyBySurname(customerSurname)
+
+    fun findBySurname(surname:String):List<Customer> {
+        val customers:List<Customer> = this.customerRepository.findAll()
+        var customerWithNameEquals:MutableList<Customer> = mutableListOf()
+        customers.forEach{
+                c -> if(surname in c.sobrenome){
+            customerWithNameEquals.add(c)
+        }
+        }
+        return customerWithNameEquals
     }
-    fun delete(customerId: Long){
-        val customer:Customer = this.findById(customerId)
+
+    fun update(customerId: Long, customerUpdateDto: CustomerDto){
+        val pastCustomer = this.findById(customerId!!)
+        pastCustomer.nome = customerUpdateDto.nome
+        pastCustomer.sobrenome = customerUpdateDto.sobrenome
+        pastCustomer.cpf = customerUpdateDto.cpf
+        pastCustomer.income = customerUpdateDto.income
+        pastCustomer.email = customerUpdateDto.email
+        pastCustomer.password = customerUpdateDto.password
+        pastCustomer.address.zipCode = customerUpdateDto.zipCode
+        pastCustomer.address.street = customerUpdateDto.street
+        this.save(pastCustomer) ?: throw BussinessException("Customer could not be saved")
+    }
+
+    fun deleteById(customerId:Long){
+        val customer = findById(customerId)
         this.customerRepository.delete(customer)
     }
-    fun update(customerId:Long, customerNewData:CustomerUpdateDto){
-        this.customerRepository.update(customerId, customerNewData.firstName,
-            customerNewData.lastName, customerNewData.income, customerNewData.zipCode, customerNewData.street)
+
+    fun delete(customer:Customer){
+        this.findById(customer.customerId!!) //chamando a função para testar se o customer realmente existe
+        this.customerRepository.delete(customer)
     }
 }
