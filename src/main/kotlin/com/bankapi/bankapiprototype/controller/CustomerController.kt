@@ -25,17 +25,17 @@ class CustomerController(private val customerService: CustomerService) {
         return ResponseEntity.status(HttpStatus.OK).body(CustomerView(customer))
     }
 
-    @GetMapping("/{nome}")
+    @GetMapping("/nome/{nome}")
     fun findByFirstName(@RequestParam(value = "nome") nome:String):ResponseEntity<List<CustomerView>>{
-        val customersView = this.customerService.findManyByName(nome).stream().map{
+        val customersView = this.customerService.findByName(nome).stream().map{
             customer:Customer -> CustomerView(customer)
         }.collect(Collectors.toList())
         return ResponseEntity.status(HttpStatus.OK).body(customersView)
     }
 
-    @GetMapping("/{sobrenome}")
+    @GetMapping("/sobrenome{sobrenome}")
     fun findByLastName(@RequestParam(value = "sobrenome") sobrenome:String):ResponseEntity<List<CustomerView>>{
-        val customerView = this.customerService.findManyBySurname(sobrenome).stream().map{
+        val customerView = this.customerService.findBySurname(sobrenome).stream().map{
             customer:Customer -> CustomerView(customer)
         }.collect(Collectors.toList())
         return ResponseEntity.status(HttpStatus.OK).body(customerView)
@@ -43,14 +43,14 @@ class CustomerController(private val customerService: CustomerService) {
 
     @PatchMapping("/update/{customerId}")
     fun updateCustomer(@RequestParam(value = "customerId") customerId:Long,
-                       @RequestBody customerNewData: CustomerUpdateDto){
+                       @RequestBody customerNewData: CustomerDto){
         this.customerService.update(customerId, customerNewData)
     }
 
     @DeleteMapping("/detele/{customerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteCustomer(@RequestParam(value = "customerId") customerId:Long){
-        this.customerService.delete(customerId)
+    fun deleteCustomerById(@RequestParam(value = "customerId") customerId:Long){
+        this.customerService.deleteById(customerId)
     }
 
 }

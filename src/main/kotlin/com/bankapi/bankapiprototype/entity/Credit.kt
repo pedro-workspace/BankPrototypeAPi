@@ -10,7 +10,7 @@ import java.util.UUID
 @Entity
 data class Credit(
     @Column(nullable = false) var creditValue:BigDecimal = BigDecimal.ZERO,
-    @Column(nullable = false) var dayFirstInstallment:LocalDate,
+    @Column(nullable = false) var dayFirstInstallment:LocalDate = LocalDate.now(),
     @Column(nullable = false) var numberOfInstallments:Int = 0,
     @Enumerated var status: Status = Status.IN_PROGRESS,
     @ManyToOne var customer:Customer? = null,

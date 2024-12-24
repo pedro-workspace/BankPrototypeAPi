@@ -44,7 +44,7 @@ class CustomerService(
         return customerWithNameEquals
     }
 
-    fun update(customerId: Long, customerUpdateDto: CustomerDto){
+    fun update(customerId: Long, customerUpdateDto: CustomerDto):Customer{
         val pastCustomer = this.findById(customerId!!)
         pastCustomer.nome = customerUpdateDto.nome
         pastCustomer.sobrenome = customerUpdateDto.sobrenome
@@ -55,6 +55,7 @@ class CustomerService(
         pastCustomer.address.zipCode = customerUpdateDto.zipCode
         pastCustomer.address.street = customerUpdateDto.street
         this.save(pastCustomer) ?: throw BussinessException("Customer could not be saved")
+        return pastCustomer
     }
 
     fun deleteById(customerId:Long){
@@ -62,8 +63,8 @@ class CustomerService(
         this.customerRepository.delete(customer)
     }
 
-    fun delete(customer:Customer){
-        this.findById(customer.customerId!!) //chamando a função para testar se o customer realmente existe
-        this.customerRepository.delete(customer)
-    }
+//    fun delete(customer:Customer){
+//        this.findById(customer.customerId!!) //chamando a função para testar se o customer realmente existe
+//        this.customerRepository.delete(customer)
+//    }
 }

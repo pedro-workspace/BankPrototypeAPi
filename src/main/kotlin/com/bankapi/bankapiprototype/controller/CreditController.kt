@@ -17,7 +17,7 @@ import java.util.stream.Collectors
 class CreditController(private val creditService:CreditService) {
     @PostMapping
     fun saveCredit(@RequestBody creditDto:CreditDto):ResponseEntity<String>{
-        val credit: Credit = this.creditService.save(creditDto.toEntity())
+        val credit: Credit = this.creditService.save(creditDto)
         return ResponseEntity.status(HttpStatus.CREATED).body(
             "Credit ${credit.creditId} from Customer ${credit.customer?.email} saved."
         )
@@ -25,7 +25,7 @@ class CreditController(private val creditService:CreditService) {
 
     @GetMapping("/{customerId}")
     fun findAllByCustomerId(@RequestParam(value = "customerId") customerId:Long):ResponseEntity<List<CreditView>>{
-        val creditsView = this.creditService.findAllByCustomerId(customerId).
+        val creditsView = this.creditService.findCreditsByCustomerId(customerId).
                 stream().map{
                     credit:Credit -> CreditView(credit)
         }.collect(Collectors.toList())
@@ -34,14 +34,14 @@ class CreditController(private val creditService:CreditService) {
 
     @GetMapping("/{creditId}")
     fun findByCreditId(@RequestParam(value = "creditId") creditId: Long,
-                       @PathVariable customerId:Long):ResponseEntity<CreditView>?{
-        val credit:Credit? = this.creditService.findById(creditId, customerId)
+                       ):ResponseEntity<CreditView>?{
+        val credit:Credit? = this.creditService.findById(creditId)
         return ResponseEntity.status(HttpStatus.OK).body(CreditView(credit!!))?: throw BussinessException("Credit not found")
     }
 
     @PatchMapping("/update/{creditId}")
     fun updateCredit(@RequestParam(value = "creditId") creditId:Long,
-                     @RequestBody @Valid creditUpdateDto: CreditUpdateDto):ResponseEntity<CreditView>{
+                     @RequestBody @Valid creditUpdateDto: CreditDto):ResponseEntity<CreditView>{
         return ResponseEntity.status(HttpStatus.OK).body(CreditView(this.creditService.update(creditId, creditUpdateDto)))
     }
 
