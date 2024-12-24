@@ -47,10 +47,10 @@ class CustomerController(private val customerService: CustomerService) {
         this.customerService.update(customerId, customerNewData)
     }
 
-    @DeleteMapping("/detele/{customerId}")
+    @DeleteMapping("/delete/{customerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteCustomerById(@RequestParam(value = "customerId") customerId:Long){
-        this.customerService.deleteById(customerId)
+    fun deleteCustomerById(@PathVariable(value = "customerId") customerId:Long){
+        this.customerService.delete(customerId)
     }
 
 }

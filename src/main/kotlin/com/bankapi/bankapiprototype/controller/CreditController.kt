@@ -45,9 +45,9 @@ class CreditController(private val creditService:CreditService) {
         return ResponseEntity.status(HttpStatus.OK).body(CreditView(this.creditService.update(creditId, creditUpdateDto)))
     }
 
-    @DeleteMapping("/delete/{creditId}")
+    @DeleteMapping("/delete/{customerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteCredit(@RequestParam(value = "creditId") creditId:Long){
+    fun deleteCredit(@PathVariable(value = "creditId") creditId:Long){
         this.creditService.delete(creditId)
     }
 }

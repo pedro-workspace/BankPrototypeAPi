@@ -4,8 +4,8 @@ import com.bankapi.bankapiprototype.entity.Customer
 import java.math.BigDecimal
 
 data class CustomerView(
-    val fistName:String,
-    val lastName:String,
+    val nome:String,
+    val sobrenome:String,
     val cpf:String,
     val income:BigDecimal,
     val email:String,
@@ -14,8 +14,8 @@ data class CustomerView(
     val id:Long?
 ){
     constructor(customer:Customer):this(
-        fistName = customer.nome,
-        lastName = customer.sobrenome,
+        nome = customer.nome,
+        sobrenome = customer.sobrenome,
         cpf = customer.cpf,
         income = customer.income,
         email = customer.email,

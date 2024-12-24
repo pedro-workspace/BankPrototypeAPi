@@ -17,7 +17,7 @@ data class CreditView(
         creditValue = credit.creditValue,
         status = credit.status,
         numberOfInstallments = credit.numberOfInstallments,
-        emailCustomer = credit.customer?.email,
-        customerIncome = credit.customer?.income
+        emailCustomer = credit.customer!!.email,
+        customerIncome = credit.customer!!.income
     )
 }

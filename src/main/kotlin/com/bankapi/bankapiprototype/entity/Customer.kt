@@ -8,7 +8,7 @@ import java.util.UUID
 
 @Entity
 data class Customer(
-    @Id var customerId:Long? = null,
+    @Id @Column var customerId:Long? = null,
     @Column(nullable=false) var nome:String = "",
     @Column(nullable=false) var sobrenome:String = "",
     @Column(nullable=false, unique = true) var cpf:String = "",
@@ -21,6 +21,6 @@ data class Customer(
         var credits:MutableList<Credit> = mutableListOf()
     ){
     init {
-        customerId = hashCode().toLong()
+        customerId = Math.abs(hashCode().toLong())
     }
 }

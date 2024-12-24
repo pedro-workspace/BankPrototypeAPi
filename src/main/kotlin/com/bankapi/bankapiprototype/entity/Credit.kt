@@ -14,9 +14,9 @@ data class Credit(
     @Column(nullable = false) var numberOfInstallments:Int = 0,
     @Enumerated var status: Status = Status.IN_PROGRESS,
     @ManyToOne var customer:Customer? = null,
-    @Id var creditId:Long? = null
+    @Id @Column var creditId:Long? = null
     ){
     init {
-        creditId = hashCode().toLong()
+        creditId = Math.abs(hashCode().toLong())
     }
 }

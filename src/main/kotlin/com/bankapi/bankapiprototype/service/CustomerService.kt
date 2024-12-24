@@ -58,13 +58,8 @@ class CustomerService(
         return pastCustomer
     }
 
-    fun deleteById(customerId:Long){
-        val customer = findById(customerId)
-        this.customerRepository.delete(customer)
+    fun delete(customerId:Long){
+        this.customerRepository.deleteById(customerId)
     }
 
-//    fun delete(customer:Customer){
-//        this.findById(customer.customerId!!) //chamando a função para testar se o customer realmente existe
-//        this.customerRepository.delete(customer)
-//    }
 }
