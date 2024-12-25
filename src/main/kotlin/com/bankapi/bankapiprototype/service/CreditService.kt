@@ -14,7 +14,7 @@ class CreditService(
     private val customerService: CustomerService) {
 
     fun validateDayFirstDayOfInstallment(dayOfInstallment: LocalDate):Boolean{
-        return if(dayOfInstallment.isBefore(LocalDate.now())) true
+        return if(dayOfInstallment.isBefore(LocalDate.now().plusDays(1))) true
                 else throw BussinessException("Invalid date of installment")
     }
 

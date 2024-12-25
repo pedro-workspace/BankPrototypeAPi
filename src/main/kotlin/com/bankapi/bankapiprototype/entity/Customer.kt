@@ -8,7 +8,7 @@ import java.util.UUID
 
 @Entity
 data class Customer(
-    @Id @Column var customerId:Long? = null,
+    @Id @Column(name = "CUSTOMER_ID") var customerId:Long? = null,
     @Column(nullable=false) var nome:String = "",
     @Column(nullable=false) var sobrenome:String = "",
     @Column(nullable=false, unique = true) var cpf:String = "",
