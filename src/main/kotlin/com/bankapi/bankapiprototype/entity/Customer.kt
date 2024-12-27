@@ -9,14 +9,15 @@ import java.util.UUID
 @Entity
 data class Customer(
     @Id @Column(name = "CUSTOMER_ID") var customerId:Long? = null,
-    @Column(nullable=false) var nome:String = "",
-    @Column(nullable=false) var sobrenome:String = "",
-    @Column(nullable=false, unique = true) var cpf:String = "",
-    @Column(nullable=false, unique = true) var email:String = "",
-    @Column(nullable=false) var income: BigDecimal = BigDecimal.ZERO,
-    @Column(nullable=false) var password:String = "",
-    @Column(nullable=false) @Embedded var address: Address,
-    @Column(nullable=false) @OneToMany(fetch = FetchType.LAZY,
+    @Column(nullable=false, name = "NOME") var nome:String = "",
+    @Column(nullable=false, name = "SOBRENOME") var sobrenome:String = "",
+    @Column(nullable=false, unique = true, name = "CPF") var cpf:String = "",
+    @Column(nullable=false, unique = true, name = "EMAIL") var email:String = "",
+    @Column(nullable=false, name = "INCOME") var income: BigDecimal = BigDecimal.ZERO,
+    @Column(nullable=false, name = "PASSWORD") var password:String = "",
+    @Column(nullable=false, name = "ZIP_CODE") var zipCode:String = "",
+    @Column(nullable=false, name = "STREET") var street:String = "",
+    @OneToMany(fetch = FetchType.LAZY,
         cascade = arrayOf(CascadeType.REMOVE, CascadeType.PERSIST), mappedBy = "customer")
         var credits:MutableList<Credit> = mutableListOf()
     ){
